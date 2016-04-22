@@ -2,9 +2,11 @@ import bisect
 import os
 import dateutil
 import tzlocal
+import pytz
 
 DEFAULT_TIME_ZONE_NAME = tzlocal.get_localzone().zone  # 'Europe/London'
 TIME_ZONE_DATA_SOURCE = u'/usr/share/zoneinfo/'
+DEFAULT_TIME_ZONE_NAME = 'CET'
 
 
 class TimezoneError(Exception):
@@ -64,11 +66,13 @@ def mktz(zone=None):
 
     if zone is None:
         zone = DEFAULT_TIME_ZONE_NAME
-    _path = os.path.join(TIME_ZONE_DATA_SOURCE, zone)
-    try:
-        tz = tzfile(_path)
-    except (ValueError, IOError) as err:
-        raise TimezoneError('Timezone "%s" can not be read, error: "%s"' % (zone, err))
-    # Stash the zone name as an attribute (as pytz does)
-    tz.zone = zone if not zone.startswith(TIME_ZONE_DATA_SOURCE) else zone[len(TIME_ZONE_DATA_SOURCE):]
+    # _path = os.path.join(TIME_ZONE_DATA_SOURCE, zone)
+    # print _path
+    # try:
+    #     tz = tzfile(_path)
+    # except (ValueError, IOError) as err:
+    #     raise TimezoneError('Timezone "%s" can not be read, error: "%s"' % (zone, err))
+    # # Stash the zone name as an attribute (as pytz does)
+    # tz.zone = zone if not zone.startswith(TIME_ZONE_DATA_SOURCE) else zone[len(TIME_ZONE_DATA_SOURCE):]
+    tz = pytz.timezone(zone)
     return tz
