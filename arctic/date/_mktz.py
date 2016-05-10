@@ -6,7 +6,6 @@ import pytz
 
 DEFAULT_TIME_ZONE_NAME = tzlocal.get_localzone().zone  # 'Europe/London'
 TIME_ZONE_DATA_SOURCE = u'/usr/share/zoneinfo/'
-DEFAULT_TIME_ZONE_NAME = 'CET'
 
 
 class TimezoneError(Exception):
